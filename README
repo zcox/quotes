@@ -3,3 +3,5 @@ update
 jetty-run
 
 Then hit http://localhost:8080 and voila, some fabulous quotes.
+
+Open a few different browsers.  Sign up a different user in each window.  Add new quotes and watch them appear in all browser windows.  Like/unlike quotes and watch them update in all browser windows.
