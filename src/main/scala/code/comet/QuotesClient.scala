@@ -3,7 +3,6 @@ package code.comet
 import net.liftweb.http._
 import net.liftweb.http.SHtml._
 import net.liftweb.http.js.JsCmds._
-import code.actor._
 import code.model._
 import scala.xml._
 
@@ -47,27 +46,4 @@ class RecentQuotesClient extends QuotesClient {
 class PopularQuotesClient extends QuotesClient {
   def registerWith = PopularQuotesServer
   val prefix = "popular"
-}
-
-case class ListChanged(q: Quote)
-case class QuoteChanged(q: Quote)
-trait QuotesServer extends DbActor with ListenerManager {
-  /** This just determines the initial message to send to listeners. */
-  def createUpdate = quotes
-
-  override def lowPriority = {
-    case ListChanged(_) => updateListeners(quotes)
-    case QuoteChanged(q) => updateListeners(q)
-  }
-
-  /** Compute the current list of quotes. */
-  def quotes: List[Quote]
-}
-
-object RecentQuotesServer extends QuotesServer {
-  def quotes = Quote.recent()
-}
-
-object PopularQuotesServer extends QuotesServer {
-  def quotes = Quote.popular()
 }

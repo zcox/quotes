@@ -12,6 +12,8 @@ import mapper._
 
 import code.model._
 
+import net.lag.configgy.{Config}
+import com.twitter.ostrich.{ServiceTracker, Stats, RuntimeEnvironment}
 
 /**
  * A class that's instantiated early and run.  It allows the application
@@ -85,5 +87,11 @@ class Boot {
       case Req(_, "css", GetRequest) => false 
       case Req(_, "js", GetRequest) => false 
     }*/
+
+    // Ostrich setup
+    val runtime = new RuntimeEnvironment(getClass)
+    val config = new Config
+    config("admin_http_port") = 9990 //TODO should really get this from props...
+    ServiceTracker.startAdmin(config, runtime)
   }
 }
